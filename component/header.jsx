@@ -1,5 +1,6 @@
 import React from "react";
 import "../src/App.css";
+import { Route, Link } from "react-router-dom";
 
 const Header = () => (
   <header>
@@ -8,7 +9,7 @@ const Header = () => (
       <hr />
       <ul>
         <li>
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
           <a href="#">About</a>
@@ -17,7 +18,7 @@ const Header = () => (
           <a href="#">Contact</a>
         </li>
         <li>
-          <a href="#">Editor</a>
+          <Link to="/editor">Editor</Link>
         </li>
       </ul>
     </div>
@@ -25,11 +26,18 @@ const Header = () => (
       <div className="search-container">
         <input type="text" placeholder="Search..." />
         <button type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
-      <button>Sign Up</button>
-      {/* <i class="fa-solid fa-user"></i> */}
+      {localStorage.getItem("user") ? (
+        <Link to="/profile">
+          <i className="fa-solid fa-user"></i>
+        </Link>
+      ) : (
+        <Link to="/register">
+          <button>Sign Up</button>
+        </Link>
+      )}
     </div>
   </header>
 );
