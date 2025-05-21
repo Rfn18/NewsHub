@@ -3,21 +3,36 @@ import { useState, useEffect } from "react";
 import "../src/App.css";
 import Header from "./header";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const Detail = () => {
-  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const formatTanggal = (tanggal) => {
+    return dayjs(tanggal).format("DD MMMM YYYY");
+  };
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/news")
-      .then((res) => {
-        setNews(res.data);
-      })
-      .catch((error) => {
+    const fetchNews = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/news/${id}`);
+        setItem(res.data);
+      } catch (error) {
         console.error(error);
-      });
-  }, []);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading berita...</p>;
+  }
+  console.log(item.payload.data[0]);
 
   const handleDelete = async () => {
     try {
@@ -32,25 +47,15 @@ const Detail = () => {
   return (
     <>
       <Header />
-      <div className="detail-container">
+      <div className="detail-container" key={item.payload.data[0].id_berita}>
         <div className="detail-box">
-          <img
-            src="https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-2166133125.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp"
-            alt="d-i"
-          />
+          <img src={item.payload.data[0].gambar} alt="d-i" />
           <div className="trend-from">
             <i className="fa-solid fa-user"></i>
-            <p>Admin</p> - <p>October 10, 2025</p>
+            <p>Admin</p> - <p>{formatTanggal(item.payload.data[0].tanggal)}</p>
           </div>
-          <h1>
-            Italy changes law on right to claim citizenship through
-            great-grandparents
-          </h1>
-          <p>
-            The Italian government has this week enacted a law that makes it
-            impossible for anyone to get Italian citizenship through their
-            great-grandparents...
-          </p>
+          <h1>{item.payload.data[0].judul}</h1>
+          <p>{item.payload.data[0].isi}</p>
           <Link to={`/edit/${id}`}>
             <button className="edit-button">edit</button>
           </Link>

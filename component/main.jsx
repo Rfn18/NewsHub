@@ -6,22 +6,6 @@ import Card from "./card";
 import { Link } from "react-router-dom";
 
 const Utama = () => {
-  const [news, setNews] = useState([]);
-
-  const formatTanggal = (tanggal) => {
-    return dayjs(tanggal).format("DD MMMM YYYY");
-  };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/news")
-      .then((res) => {
-        setNews(res.data.payload.data);
-        console.log(res.data.payload.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
   return (
     <main>
       <div className="welcome">
@@ -58,11 +42,7 @@ const Utama = () => {
       <div className="news">
         <h1>Latest News</h1>
         <div className="news-main-content">
-          {news.map((item) => (
-            <>
-              <Card />
-            </>
-          ))}
+          <Card />
         </div>
       </div>
     </main>

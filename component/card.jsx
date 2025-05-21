@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Card = () => {
+  
   const [news, setNews] = useState([]);
 
   const formatTanggal = (tanggal) => {
@@ -11,14 +13,19 @@ const Card = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/news")
-      .then((res) => {
+    const fetchNews = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/news`);
         setNews(res.data.payload.data);
         console.log(res.data.payload.data);
-      })
-      .catch((err) => console.error(err));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchNews();
   }, []);
+  
 
   return (
     <>

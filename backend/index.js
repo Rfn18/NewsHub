@@ -83,6 +83,21 @@ app.get("/news", (req, res) => {
   });
 });
 
+app.get("/news/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT * FROM news WHERE id_berita = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      response(500, null, "Error retrieving data", res);
+    } else if (result && result.length > 0) {
+      response(200, result, "Data retrieved successfully", res);
+    } else {
+      response(401, null, "Invalid credentials", res);
+    }
+  });
+});
+
 app.put("/edit/:id", (req, res) => {
   const { id } = req.params;
   const { judul, isi, tanggal, gambar } = req.body;
