@@ -26,7 +26,7 @@ const Login = () => {
           alert("Login failed");
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err) );
   };
 
   return (
@@ -48,6 +48,7 @@ const Login = () => {
             onChange={(e) => setValues({ ...values, password: e.target.value })}
             required
           />
+          
           <button type="submit" name="Login">
             Login
           </button>

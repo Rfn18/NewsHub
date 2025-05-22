@@ -18,7 +18,7 @@ const Register = () => {
       .post("http://localhost:3000/register", values)
       .then((res) => {
         console.log(res);
-        navigate("NewsHub/login");
+        navigate("/login");
       })
       .catch((err) => console.error(err));
   };

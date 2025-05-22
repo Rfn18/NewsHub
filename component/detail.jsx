@@ -59,9 +59,11 @@ const Detail = () => {
           <Link to={`/edit/${id}`}>
             <button className="edit-button">edit</button>
           </Link>
+          <Link to={`/delete/${id}`}>
           <button className="delete-button" onClick={handleDelete}>
             delete
           </button>
+          </Link>
         </div>
       </div>
     </>

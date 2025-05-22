@@ -9,6 +9,7 @@ import Profile from "../component/profile.jsx";
 import Editor from "../component/set/editor.jsx";
 import Card from "../component/card.jsx";
 import Detail from "../component/detail.jsx";
+import Edit from "../component/set/edit.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/editor" element={<Editor />} />
         <Route path="/card" element={<Card />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/edit/:id" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
